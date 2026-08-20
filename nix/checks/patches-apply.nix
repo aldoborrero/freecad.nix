@@ -30,7 +30,7 @@ let
     in
     ''
       echo "== ${name}"
-      ${pkgs.python3}/bin/python3 ${../../ci/check_patches.py} \
+      ${pkgs.python3}/bin/python3 ${../../tools/check_patches.py} \
         --source ${t.src} \
         --expected ${../patches/expected.json} \
         ${pkgs.lib.concatMapStringsSep " " (p: "--patch ${p}") (patches ++ [ t.startTab ])}

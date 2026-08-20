@@ -1,0 +1,50 @@
+{
+  "Curves": {
+    "content": [
+      "workbench"
+    ],
+    "description": "A collection of tools mainly dedicated to NURBS curves and surfaces modeling.",
+    "hash": "sha256-Hnk8P0TENjSO5LIYxlxKCUkIU+aE0q5Aj+mTtFBfk6A=",
+    "homepage": "https://github.com/tomate44/CurvesWB",
+    "license": "LGPL-2.1-or-later",
+    "name": "Curves",
+    "ref": "main",
+    "repository": "https://github.com/tomate44/CurvesWB",
+    "rev": "3f010978ff267cdcf249f394cb065dbd6a392fab",
+    "spdx": "LGPL-2.1-or-later",
+    "tag": null,
+    "version": "0.6.75"
+  },
+  "Gridfinity": {
+    "content": [
+      "workbench"
+    ],
+    "description": "This Workbench will generate several variations of parametric Gridfinity bins and baseplates that can be easily customized.",
+    "hash": "sha256-pJs4oLpSa3YHlj15Cx4RCF3NKLefJ5MrjQaCqqr0ufE=",
+    "homepage": "https://github.com/Stu142/FreeCAD-Gridfinity-Workbench",
+    "license": "lgpl-2.1-or-later",
+    "name": "Gridfinity",
+    "ref": "master",
+    "repository": "https://github.com/Stu142/FreeCAD-Gridfinity-Workbench",
+    "rev": "6caeb02812bf3b389110c205c6fd48638353e957",
+    "spdx": "LGPL-2.1-or-later",
+    "tag": "v0.12.4",
+    "version": "0.12.4"
+  },
+  "kicadStepUpMod": {
+    "content": [
+      "workbench"
+    ],
+    "description": "A bidirectional ECAD/MCAD collaboration between KiCAD and FreeCAD.",
+    "hash": "sha256-ukJtWY1dmtWyr+b1sXF3y/cfQwvJAT07cGOfqgpwnoE=",
+    "homepage": "https://github.com/easyw/kicadStepUpMod",
+    "license": "AGPLv3.0",
+    "name": "kicadStepUpMod",
+    "ref": "master",
+    "repository": "https://github.com/easyw/kicadStepUpMod",
+    "rev": "f5cd790fd5e88925e598b67719ebcb25b46b6a6c",
+    "spdx": "AGPL-3.0-only",
+    "tag": null,
+    "version": "11.09.5"
+  }
+}
