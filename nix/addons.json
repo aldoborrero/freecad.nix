@@ -43,7 +43,7 @@
     "ref": "master",
     "repository": "https://github.com/easyw/kicadStepUpMod",
     "rev": "f5cd790fd5e88925e598b67719ebcb25b46b6a6c",
-    "spdx": "AGPL-3.0-only",
+    "spdx": null,
     "tag": null,
     "version": "11.09.5"
   }

@@ -56,16 +56,14 @@ LOCK = ROOT / "nix" / "addons.json"
 # Free text in practice, so this maps what upstream actually writes rather than trying to
 # be a general SPDX parser. Anything absent stays null in the lock and has to be declared
 # where the addon is packaged — never guessed.
+# Only spellings that cannot change what the licence permits. Notably absent: every
+# `LGPLv2.1`, `GPLv3`, `AGPLv3` form. Those name a version but not whether it is `-only`
+# or `-or-later`, and the difference is whether a user may move the work to a later
+# licence — not a detail to infer from a string. They go to the by-hand pile with
+# `LGPL-3` and `GPL-3`, which have exactly the same defect.
 SPDX = {
-    "lgplv2.1": "LGPL-2.1-or-later",
-    "lgpl-2.1": "LGPL-2.1-or-later",
-    "lgpl2.1": "LGPL-2.1-or-later",
-    "lgplv3": "LGPL-3.0-or-later",
-    "gplv3": "GPL-3.0-or-later",
-    "gplv2": "GPL-2.0-or-later",
-    "agplv3.0": "AGPL-3.0-only",
-    "agplv3": "AGPL-3.0-only",
     "apache 2.0": "Apache-2.0",
+    "apache license 2.0": "Apache-2.0",
     "mit license": "MIT",
 }
 # Matched case-insensitively, then reported in canonical case: several addons write a

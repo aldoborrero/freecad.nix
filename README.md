@@ -54,7 +54,10 @@ commits is not thereby broken. What an addon does have to pass is the shape chec
 its `package.xml` claims a `workbench`, then `InitGui.py` or `freecad/*/init_gui.py` has
 to exist, or FreeCAD will start with the addon installed and nothing on screen.
 
-**On licences.** 32 of 173 cannot be resolved automatically. 27 declare none at all; the
-rest write things like `LGPL-3`, which does not say `-only` or `-or-later`, or `GPLv2.1`,
-which is not a licence that exists. Those are left null in the lock and must be declared
-where the addon is packaged. Guessing a licence is not a rounding error.
+**On licences.** 45 of 173 cannot be resolved automatically. 27 declare none at all. The
+rest name a version without saying whether it is `-only` or `-or-later` — `LGPL-3`,
+`LGPLv2.1`, `AGPLv3.0` — and that difference is whether a user may move the work to a
+later licence, so it is not inferred from a string. (`GPLv2.1` is in there too, and no
+such licence exists.) Those stay null in the lock and must be declared where the addon
+is packaged, with the evidence; see `nix/packages/kicad-stepup` for what that looks like
+when upstream ships no LICENSE file at all.
