@@ -1,0 +1,3 @@
+{
+  "custom-titlebar.patch::src/Gui/MainWindow.h::1": "Verified by hand against weekly-2026.08.20: the include lands between <QMainWindow> and <QMdiArea>, where it belongs. The fuzz is upstream adding <QByteArray> and <QString> around that block, not the anchor moving."
+}
