@@ -85,6 +85,12 @@ pkgs.stdenvNoCC.mkDerivation {
   '';
 
   passthru = {
+    # The key in nix/addons.json, which is the catalogue's name for the addon and is not
+    # the package name: `Gridfinity` against `gridfinity`, `kicadStepUpMod` against
+    # `kicad-stepup`. tools/discovery.py reads this to know that the way to move this
+    # package forward is the catalogue, and which entry to look at.
+    catalogName = name;
+
     # What FreeCAD should be pointed at. Almost always $out, but an addon whose module
     # directory sits below the root says so, the way Timeline installs as Mod/Timeline.
     modulePath = overrides.modulePath or null;

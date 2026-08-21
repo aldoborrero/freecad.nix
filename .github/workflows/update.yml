@@ -1,0 +1,83 @@
+# One possible driver, not the engine.
+#
+# Everything that decides anything lives in tools/: `discovery.py` works out what can
+# move and how, `update.py` moves one target. Both print their result and set GitHub
+# outputs only when GITHUB_OUTPUT happens to be set, so they run identically under a
+# self-hosted runner, another CI, or a terminal. **This file is deletable** — it is here
+# as a worked example of calling them, not as the place the logic lives.
+name: Update
+
+on:
+  schedule:
+    # Wednesdays, after FreeCAD cuts its weekly tag.
+    - cron: '0 6 * * 4'
+  workflow_dispatch:
+    inputs:
+      only:
+        description: 'Space-separated target names (empty for all)'
+        required: false
+        default: ''
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.discover.outputs.matrix }}
+      has-updates: ${{ steps.discover.outputs.has-updates }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v31
+      - id: discover
+        run: python3 tools/discovery.py ${{ inputs.only && format('--only {0}', inputs.only) || '' }}
+
+  update:
+    needs: discover
+    if: needs.discover.outputs.has-updates == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.discover.outputs.matrix) }}
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v31
+
+      # `manual` targets are reported by discovery so they are not forgotten, and refused
+      # by update.py because acting on them needs somebody to read what changed upstream.
+      - if: matrix.kind == 'manual'
+        run: |
+          echo "::notice title=${{ matrix.name }}::${{ matrix.note }}"
+
+      - if: matrix.kind != 'manual'
+        id: bump
+        run: |
+          nix shell nixpkgs#nix-update nixpkgs#nix-prefetch-git \
+            -c python3 tools/update.py --entry '${{ toJson(matrix) }}'
+
+      # The cheap checks only. `nix flake check` would build FreeCAD, which is 25-40
+      # minutes here and belongs on a machine with a cache, not on a bump job. What runs
+      # is what actually guards a bump: do the patches still apply, do the addons still
+      # expose what they claim.
+      - if: matrix.kind != 'manual' && steps.bump.outputs.changed == 'true'
+        run: |
+          nix build --no-link .#checks.x86_64-linux.patches-apply
+          nix build --no-link .#checks.x86_64-linux.addon-shapes
+          nix build --no-link .#checks.x86_64-linux.stepz-python
+
+      - if: matrix.kind != 'manual' && steps.bump.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: update/${{ matrix.name }}
+          title: 'chore: bump ${{ matrix.name }}'
+          commit-message: 'chore: bump ${{ matrix.name }}'
+          labels: dependencies
+          # Deliberately no auto-merge. A weekly FreeCAD tag can move code out from under
+          # three patches while every check above still passes, because those check that
+          # the patches *apply*, not that the result behaves.
+          body: |
+            `tools/update.py` moved `${{ matrix.name }}` from `${{ matrix.current }}`.
+
+            patches-apply, addon-shapes and stepz-python ran. **Nothing built FreeCAD** —
+            that needs a machine with a cache. Check before merging.

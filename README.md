@@ -115,3 +115,36 @@ later licence, so it is not inferred from a string. (`GPLv2.1` is in there too, 
 such licence exists.) Those stay null in the lock and must be declared where the addon
 is packaged, with the evidence; see `nix/packages/kicad-stepup` for what that looks like
 when upstream ships no LICENSE file at all.
+
+## Keeping it current
+
+`tools/discovery.py` works out what can move and how; `tools/update.py` moves one thing.
+Both print their result and set GitHub Actions outputs only when `GITHUB_OUTPUT` happens
+to be set, so they run the same under a workflow, a self-hosted runner, or a terminal.
+`.github/workflows/update.yml` is one driver, and is deletable — nothing decides anything
+there.
+
+```
+$ tools/discovery.py
+11 targets: {'catalog': 3, 'nix-update': 2, 'flake-input': 5, 'manual': 1}
+```
+
+**Four routes, because there are four kinds of thing here:**
+
+| Route | Who | Moved by |
+| --- | --- | --- |
+| `flake-input` | nixpkgs, blueprint, treefmt-nix, and the two addons with their own repos | `nix flake update <input>` |
+| `nix-update` | a package pinning its own `src` | `nix-update`, plus `nix/packages/<name>/nix-update-args` |
+| `catalog` | an addon from `nix/addons.json` | `tools/catalog.py update <CatalogName>` |
+| `manual` | upstream's title-bar PR, fetched at two pinned SHAs | reported, never acted on |
+
+**A versioned package with no route is an error.** That is the point of discovering
+rather than listing: adding a package and forgetting to say how it moves stops the job
+instead of leaving it pinned forever. `stepz` has no `version` and is exempt — its source
+is here, so there is nothing upstream to compare against.
+
+**Nothing auto-merges.** The bump job runs `patches-apply`, `addon-shapes` and
+`stepz-python` — seconds, and the ones that actually guard a bump — but not
+`nix flake check`, which builds FreeCAD. A weekly tag can move code out from under three
+patches while every one of those still passes, because they check that the patches
+*apply*, not that the result behaves.
