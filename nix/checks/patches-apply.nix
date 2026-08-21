@@ -8,8 +8,10 @@
 # derivation, already in the cache once anyone has built either package.
 { pkgs, perSystem, ... }:
 let
+  # Only the ones every tree shares. The title bar differs per tree and is named below:
+  # the release build carries this repo's backport, the weekly one carries upstream's own
+  # pull request, which does not apply to the release at all (7 failed hunks).
   patches = [
-    ../patches/astocad-titlebar/custom-titlebar.patch
     ../patches/freecad-tabs-north/tabs-north.patch
     ../patches/astocad-home-icon/home-icon.patch
   ];
@@ -20,6 +22,9 @@ let
     unstable = {
       src = perSystem.self.freecad-unstable.src;
       startTab = ../patches/freecad-start-tab/hide-start-tab-weekly.patch;
+      # The same fetched diff the package applies, so this checks what is actually built
+      # rather than a second copy of it.
+      titleBar = perSystem.self.freecad-unstable.titleBarPatch;
     };
   };
 
@@ -33,7 +38,13 @@ let
       ${pkgs.python3}/bin/python3 ${../../tools/check_patches.py} \
         --source ${t.src} \
         --expected ${../patches/expected.json} \
-        ${pkgs.lib.concatMapStringsSep " " (p: "--patch ${p}") (patches ++ [ t.startTab ])}
+        ${pkgs.lib.concatMapStringsSep " " (p: "--patch ${p}") (
+          patches
+          ++ [
+            t.startTab
+            t.titleBar
+          ]
+        )}
     '';
 in
 pkgs.runCommand "patches-apply"

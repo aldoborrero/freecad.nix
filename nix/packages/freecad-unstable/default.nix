@@ -22,6 +22,35 @@
 { pkgs, ... }:
 let
   version = "2026.08.20";
+
+  # The title bar: upstream's own pull request, FreeCAD#26766 by PaddleStroke — the same
+  # work AstoCAD carries. Against this tag it applies **exactly**: 0 failed hunks, 0 fuzz,
+  # largest offset 0 lines.
+  #
+  # This repo used to carry a 130-line backport of it written against 1.1.1, because the
+  # PR fails on the release with 7 hunks across three files. That backport is gone. It was
+  # a subset — no preferences page, so the feature could only be turned on from Nix; no
+  # `CommandWindow.cpp`; no `WorkbenchSelector` integration; and none of the change to
+  # `ToolBarManager.h`, which may be the toolbar docking the review is still waiting on.
+  # Keeping a worse copy of an open PR, plus 5497 lines of vendored kit, to serve a
+  # release that upstream will supersede was not worth the maintenance.
+  #
+  # The consequence, stated plainly: **the release build has no custom title bar.** It
+  # arrives when #26766 lands and a FreeCAD carrying it is packaged.
+  #
+  # Pinned to a `compare/<base>...<head>` URL rather than `pull/26766.diff`, which
+  # follows the branch: PaddleStroke pushes to it, and a patch that silently becomes a
+  # different patch is worse than one that stops applying. When the PR moves, update both
+  # SHAs deliberately. `nix flake check`'s patches-apply is what reports the day this
+  # stops fitting the tag.
+  titleBar = pkgs.fetchurl {
+    name = "freecad-pr-26766-custom-title-bar.diff";
+    url =
+      "https://github.com/FreeCAD/FreeCAD/compare/"
+      + "b2da06bfe0521773f302c8be977b31dc27f60203..."
+      + "9ee0200042cbb496315de0fd4a56d12897178645.diff";
+    hash = "sha256-k7hQDgKVZ207F3IakhwNqqL9vr/zKxwjHO0nrQdA6YM=";
+  };
 in
 pkgs.freecad-wayland.overrideAttrs (old: {
   pname = "freecad-unstable";
@@ -39,27 +68,24 @@ pkgs.freecad-wayland.overrideAttrs (old: {
   # commit already in this tree. Only the first is kept, matched by name so a nixpkgs
   # rename fails loudly here instead of silently dropping one that still matters.
   #
-  # This repo's four follow. All apply against the pinned tag — measured with `patch -p1`
-  # on the fetched tree: offsets of up to 415 lines and no failed hunk. One hunk is
-  # placed with *fuzz 2*, custom-titlebar's first on `src/Gui/MainWindow.h`, because
-  # upstream added <QByteArray> and <QString> around the include block it anchors on.
-  # `nix flake check` re-measures this; see nix/checks/patches-apply.nix.
+  # Then upstream's title-bar PR and this repo's own three. All four apply against the
+  # pinned tag with no failed hunk and no fuzz — measured with `patch -p1` on the fetched
+  # tree, and re-measured by `nix flake check`; see nix/checks/patches-apply.nix.
+  #
+  # The fuzz that the release build carries is absent here precisely because the title bar
+  # is upstream's own diff rather than a backport of it: it anchors on a tree it was
+  # written against.
   patches =
     builtins.filter (p: builtins.match ".*NIXOS-don-t-ignore-PYTHONPATH.*" (toString p) != null) (
       old.patches or [ ]
     )
     ++ [
-      ../../patches/astocad-titlebar/custom-titlebar.patch
+      titleBar
       # Its own copy for this tree: the release variant costs a second fuzzed hunk here.
       ../../patches/freecad-start-tab/hide-start-tab-weekly.patch
       ../../patches/freecad-tabs-north/tabs-north.patch
       ../../patches/astocad-home-icon/home-icon.patch
     ];
-
-  postPatch = (old.postPatch or "") + ''
-    cp -r ${../../patches/astocad-titlebar/customtitlebarkit} src/3rdParty/customtitlebarkit
-    chmod -R u+w src/3rdParty/customtitlebarkit
-  '';
 
   # Two things main's build wants that the release derivation does not provide: gtest,
   # and defusedxml, which the Addon Manager now checks for at configure time.
@@ -74,6 +100,9 @@ pkgs.freecad-wayland.overrideAttrs (old: {
   # Keep the two that are tests.
   passthru = (old.passthru or { }) // {
     tests = pkgs.lib.filterAttrs (_: pkgs.lib.isDerivation) (old.passthru.tests or { });
+    # So nix/checks/patches-apply.nix measures the diff this package actually applies,
+    # rather than a second declaration of it that could drift.
+    titleBarPatch = titleBar;
   };
 
   meta = old.meta // {

@@ -149,6 +149,8 @@ def main() -> int:
     expected: dict[str, str] = {}
     if args.expected and args.expected.exists():
         expected = json.loads(args.expected.read_text(encoding="utf-8"))
+        # The file carries its own explanation; that is prose, not an exemption.
+        expected.pop("_comment", None)
 
     return check(args.source, args.patch, expected)
 

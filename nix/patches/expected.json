@@ -1,3 +1,11 @@
 {
-  "custom-titlebar.patch::src/Gui/MainWindow.h::1": "Verified by hand against weekly-2026.08.20: the include lands between <QMainWindow> and <QMdiArea>, where it belongs. The fuzz is upstream adding <QByteArray> and <QString> around that block, not the anchor moving."
+  "_comment": [
+    "Fuzzed hunks somebody has looked at, keyed <patch>::<file>::<hunk>.",
+    "Empty on purpose: every patch here is applied to a tree it was written against.",
+    "The one entry this used to hold was the title-bar backport's fuzz 2 on",
+    "MainWindow.h, which only ever appeared because that patch was written for 1.1.1",
+    "and applied to a weekly tag. The backport is gone; the weekly carries upstream's",
+    "own diff (FreeCAD#26766) instead.",
+    "An entry that stops being needed fails the check too, so this cannot rot quietly."
+  ]
 }

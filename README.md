@@ -7,7 +7,19 @@ Two tracks, on purpose:
 | | what it is | how it moves |
 |---|---|---|
 | `freecad` | the release nixpkgs packages, plus this repo's patches, addons and preferences | with the `nixpkgs` input |
-| `freecad-unstable` | an upstream **weekly tag**, same patches | `nix-update`, on its own schedule |
+| `freecad-unstable` | an upstream **weekly tag**, plus the title bar | `nix-update`, on its own schedule |
+
+**Only the weekly build has the custom title bar**, and it gets it from upstream's own
+pull request — [FreeCAD#26766](https://github.com/FreeCAD/FreeCAD/pull/26766), by
+PaddleStroke, the same work AstoCAD carries. Against the pinned tag that diff applies
+exactly: 0 failed hunks, 0 fuzz, largest offset 0 lines. It does *not* apply to the
+release, where 7 hunks fail, so the release simply does without until the PR lands.
+
+This repo used to carry a 130-line backport of it written against 1.1.1, with 5497 lines
+of vendored `customtitlebarkit` beside it. That is gone. It was a subset — no preferences
+page, so the feature could only be switched on from Nix, and none of the
+`ToolBarManager.h` change that may be the toolbar docking the review is waiting on — and
+maintaining a worse copy of an open PR was not worth it.
 
 Extensions are packages here, not `flake = false` inputs. A bare source tree has no
 `meta`, so its licence has to be written down by hand and kept honest by hand, and
