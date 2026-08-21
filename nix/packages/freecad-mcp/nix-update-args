@@ -1,0 +1,3 @@
+# Upstream tags releases as `vX.Y.Z`; `version` here is the bare number and `rev`
+# reassembles the tag from it.
+--version-regex ^v([0-9]+\.[0-9]+\.[0-9]+)$

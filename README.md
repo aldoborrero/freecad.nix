@@ -41,9 +41,16 @@ Five so far, from two different places:
 | `kicad-stepup` | FreeCAD's catalogue | AGPL-3.0-only ¹ | `InitGui.py` |
 | `freecad-timeline` | [its own repo](https://github.com/aldoborrero/freecad-timeline) | LGPL-2.1-or-later | `InitGui.py`, under `Mod/Timeline` |
 | `slicercad` | [its own repo](https://github.com/aldoborrero/slicercad) | AGPL-3.0-only | `freecad/slicercad/init_gui.py` |
+| `freecad-mcp` | [neka-nat](https://github.com/neka-nat/freecad-mcp) | MIT | `InitGui.py`, under `share/freecad-mcp/FreeCADMCP` |
 
 <sub>¹ declared by hand: its manifest says `AGPLv3.0`, which names a version but not
 whether it is `-only` or `-or-later`.</sub>
+
+`freecad-mcp` is the odd one: a Python *application* — the MCP server a client runs
+outside FreeCAD — that also carries a workbench answering it over XML-RPC. That half
+cannot be a Python module of the package, since it only imports inside FreeCAD, so it
+ships as data and `passthru.modulePath` points at it. From the check's side that makes it
+indistinguishable from any other addon, which is the point of the field.
 
 The two written here come in as **flakes**, not as source trees, so what arrives already
 has a version, a `meta` and its own gate behind it. The three from the catalogue are built

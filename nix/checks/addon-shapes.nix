@@ -30,6 +30,10 @@ let
       kicad-stepup
       freecad-timeline
       slicercad
+      # Not an addon package as such — a Python application that happens to carry a
+      # workbench in `share/`. It is in this list precisely because `modulePath` makes
+      # that indistinguishable from here.
+      freecad-mcp
       ;
   };
 
