@@ -43,6 +43,16 @@ Five so far, from two different places:
 | `slicercad` | [its own repo](https://github.com/aldoborrero/slicercad) | AGPL-3.0-only | `freecad/slicercad/init_gui.py` |
 | `freecad-mcp` | [neka-nat](https://github.com/neka-nat/freecad-mcp) | MIT | `InitGui.py`, under `share/freecad-mcp/FreeCADMCP` |
 
+`stepz` sits beside them and is **not** an addon — it is a plain importable module, so it
+is absent from the table and from the shape check, which rejects it correctly. It exists
+only to repair a consequence of packaging: nixpkgs builds `kicad-packages3d` with
+`compressStep ? true`, leaving 7241 `.stpZ` and no `.step`, and kicadStepUp reaches those
+through a `stepZ` addon that opens gzip where `zip -j -9` writes PKZIP — and which does
+not import on Python 3 regardless. Without it a board imports with its outline and not one
+component. The better fix is upstream, and is not blocked on anything:
+`kicadStepUptools.py:469` already does `import zipfile as zf`, so reading the archive
+there needs no new dependency. If that lands, this package can go.
+
 <sub>¹ declared by hand: its manifest says `AGPLv3.0`, which names a version but not
 whether it is `-only` or `-or-later`.</sub>
 
