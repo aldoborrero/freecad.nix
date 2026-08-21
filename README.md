@@ -30,7 +30,32 @@ function while the build stays green. Every fuzzed hunk must be declared in
 `nix/patches/expected.json` with a note saying somebody looked at where it went, and a
 declaration that stops being needed also fails, so stale exemptions cannot pile up.
 
-## Adding an extension
+## The extensions
+
+Five so far, from two different places:
+
+| Addon | Where it comes from | Licence | Layout |
+| --- | --- | --- | --- |
+| `gridfinity` | FreeCAD's catalogue | LGPL-2.1-or-later | `freecad/gridfinity_workbench/init_gui.py` |
+| `curves` | FreeCAD's catalogue | LGPL-2.1-or-later | `freecad/Curves/init_gui.py` |
+| `kicad-stepup` | FreeCAD's catalogue | AGPL-3.0-only ¹ | `InitGui.py` |
+| `freecad-timeline` | [its own repo](https://github.com/aldoborrero/freecad-timeline) | LGPL-2.1-or-later | `InitGui.py`, under `Mod/Timeline` |
+| `slicercad` | [its own repo](https://github.com/aldoborrero/slicercad) | AGPL-3.0-only | `freecad/slicercad/init_gui.py` |
+
+<sub>¹ declared by hand: its manifest says `AGPLv3.0`, which names a version but not
+whether it is `-only` or `-or-later`.</sub>
+
+The two written here come in as **flakes**, not as source trees, so what arrives already
+has a version, a `meta` and its own gate behind it. The three from the catalogue are built
+by `nix/lib/mkAddon.nix` out of `nix/addons.json`.
+
+`nix flake check` runs `addon-shapes` over all five **at the path FreeCAD would be pointed
+at**, which is not the same as the store root for all of them: Timeline keeps its module
+in `Mod/Timeline` and says so through `passthru.modulePath`, while Slicercad's store root
+*is* the module. Getting that wrong does not fail loudly on its own — FreeCAD would load
+an addon called `xxxxxxxx-freecad-timeline-1.0.0`, or load nothing and say nothing.
+
+## Adding an extension from the catalogue
 
 FreeCAD 1.1 publishes a catalogue of every addon it knows about — 173 of them — which
 `tools/catalog.py` reads:

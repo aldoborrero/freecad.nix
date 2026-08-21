@@ -73,7 +73,21 @@ def main() -> int:
             return 1
 
     if not kinds:
-        print("  no content declared anywhere; nothing to verify")
+        # Nothing declared *and* no entry point means this is not a module directory at
+        # all — which is exactly what pointing at the wrong path looks like. Timeline's
+        # store root, for instance, is a container holding `Mod/Timeline`; checking it
+        # instead of the module used to pass here with "nothing to verify", so the check
+        # could not catch the one mistake it exists for.
+        found = workbench_entry_point(root)
+        if found is None:
+            print(
+                f"  ERROR: {root} declares no content and has no entry point.\n"
+                f"      This is not a FreeCAD module directory. If the package keeps its\n"
+                f"      module below the root, point at that path — see passthru.modulePath.",
+                file=sys.stderr,
+            )
+            return 1
+        print(f"  no content declared, but an entry point is present: {found}")
         return 0
 
     problems: list[str] = []
@@ -98,8 +112,13 @@ def main() -> int:
                     "      matching <name>.cfg, which is what PreferencePackManager looks for."
                 )
         else:
-            # macro, other, depend: no layout this can meaningfully assert.
-            print(f"  {kind} -> not checked (no layout rule)")
+            # macro, other, depend: no layout rule to assert, but say what is actually
+            # there. The kinds are not applied consistently in the wild — two addons
+            # that both add UI from an InitGui.py without registering a Gui::Workbench
+            # can declare `workbench` and `other` respectively — so the entry point is
+            # worth printing even where nothing is required.
+            found = workbench_entry_point(root)
+            print(f"  {kind} -> no layout rule; entry point is {found or 'none'}")
 
     for problem in problems:
         print(f"  ERROR: {problem}", file=sys.stderr)

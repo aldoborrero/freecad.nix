@@ -12,6 +12,20 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # This repo's own addons, each in its own repository because each is a project
+    # rather than a packaging detail — they carry their own tests, their own gate and
+    # their own README, and both are installable by FreeCAD's Addon Manager with no Nix
+    # involved. They come in as *flakes*, so what arrives is a package with a version
+    # and a `meta`, not a source tree needing both written down here.
+    freecad-timeline = {
+      url = "github:aldoborrero/freecad-timeline";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    slicercad = {
+      url = "github:aldoborrero/slicercad";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   # Deliberately no `flake = false` addon inputs. An addon pinned as a bare source tree

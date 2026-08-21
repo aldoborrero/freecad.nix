@@ -47,7 +47,8 @@ let
     ".github"
     ".gitignore"
     ".gitattributes"
-  ] ++ (overrides.exclude or [ ]);
+  ]
+  ++ (overrides.exclude or [ ]);
 in
 pkgs.stdenvNoCC.mkDerivation {
   pname = overrides.pname or (lib.toLower name);
