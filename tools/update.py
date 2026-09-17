@@ -31,7 +31,7 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from lib import ROOT, run, tree_state, write_output  # noqa: E402
+from lib import ROOT, run, tree_state, write_output
 
 log = logging.getLogger("update")
 
@@ -110,6 +110,9 @@ def main() -> int:
 
     changed = tree_state() != tree_before
     if changed:
+        # Package versions and metadata feed the README; every driver needs this,
+        # including local runs that do not go through GitHub Actions.
+        run(["nix", "run", "--no-update-lock-file", ".#gen-readme"])
         diff = run(["git", "diff", "HEAD", "--stat"], capture=True).stdout.strip()
         log.info("%s moved:\n%s", entry["name"], diff)
     else:

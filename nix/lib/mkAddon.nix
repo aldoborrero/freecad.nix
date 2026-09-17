@@ -1,8 +1,8 @@
 # One FreeCAD addon, built from what `tools/catalog.py` locked.
 #
-# Imported directly rather than through `flake.lib` — `import ../../lib/mkAddon.nix
-# { inherit pkgs; }` — because a package needs it at evaluation time and blueprint's
-# `flake.lib` is not in a package's scope.
+# Reached as `flake.lib.mkAddon` — blueprint hands every package a `flake` argument, so
+# the packages go through the same export an outside consumer would, and a break in it
+# fails the build here rather than only somewhere else.
 #
 # What lands in the store is the module directory itself: the thing `--module-path`
 # points at, which is also exactly what the Addon Manager would clone into
@@ -56,8 +56,7 @@ pkgs.stdenvNoCC.mkDerivation {
 
   src = pkgs.fetchgit {
     url = entry.repository;
-    rev = entry.rev;
-    hash = entry.hash;
+    inherit (entry) rev hash;
     fetchSubmodules = overrides.fetchSubmodules or false;
   };
 

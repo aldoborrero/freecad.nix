@@ -8,23 +8,14 @@
 # derivation, already in the cache once anyone has built either package.
 { pkgs, perSystem, ... }:
 let
-  # Only the ones every tree shares. The title bar differs per tree and is named below:
-  # the release build carries this repo's backport, the weekly one carries upstream's own
-  # pull request, which does not apply to the release at all (7 failed hunks).
-  patches = [
-    ../patches/freecad-tabs-north/tabs-north.patch
-    ../patches/astocad-home-icon/home-icon.patch
-  ];
-
-  # The two trees drift independently, and hide-start-tab has a copy per tree, so each
-  # gets its own run rather than one averaged answer.
+  # One tree today, because `freecad-unstable` is the only FreeCAD this flake builds. The
+  # shape is per-tree anyway: patches drift against each source independently, and one
+  # averaged answer over several would say nothing useful about any of them.
   trees = {
     unstable = {
       src = perSystem.self.freecad-unstable.src;
-      startTab = ../patches/freecad-start-tab/hide-start-tab-weekly.patch;
-      # The same fetched diff the package applies, so this checks what is actually built
-      # rather than a second copy of it.
-      titleBar = perSystem.self.freecad-unstable.titleBarPatch;
+      # Keep both the list and its order identical to the actual build.
+      patches = perSystem.self.freecad-unstable.patches;
     };
   };
 
@@ -38,13 +29,7 @@ let
       ${pkgs.python3}/bin/python3 ${../../tools/check_patches.py} \
         --source ${t.src} \
         --expected ${../patches/expected.json} \
-        ${pkgs.lib.concatMapStringsSep " " (p: "--patch ${p}") (
-          patches
-          ++ [
-            t.startTab
-            t.titleBar
-          ]
-        )}
+        ${pkgs.lib.concatMapStringsSep " " (p: "--patch ${p}") t.patches}
     '';
 in
 pkgs.runCommand "patches-apply"

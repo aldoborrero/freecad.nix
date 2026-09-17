@@ -37,7 +37,7 @@ from typing import Any
 # reason to have set PYTHONPATH.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from lib import ROOT, run, write_output  # noqa: E402
+from lib import ROOT, run, write_output
 
 log = logging.getLogger("discovery")
 
@@ -102,14 +102,20 @@ def main() -> int:
     ap.add_argument(
         "--only", nargs="*", default=None, help="restrict to these target names"
     )
+    ap.add_argument(
+        "--exclude", nargs="*", default=[], help="targets handled by another workflow"
+    )
     args = ap.parse_args()
 
-    system = args.system or subprocess.run(
-        ["nix", "eval", "--impure", "--raw", "--expr", "builtins.currentSystem"],
-        capture_output=True,
-        text=True,
-        check=True,
-    ).stdout.strip()
+    system = (
+        args.system
+        or subprocess.run(
+            ["nix", "eval", "--impure", "--raw", "--expr", "builtins.currentSystem"],
+            capture_output=True,
+            text=True,
+            check=True,
+        ).stdout.strip()
+    )
 
     inputs = root_inputs()
     found = packages(system)
@@ -150,6 +156,7 @@ def main() -> int:
 
     if args.only:
         entries = [e for e in entries if e["name"] in args.only]
+    entries = [e for e in entries if e["name"] not in args.exclude]
 
     matrix = {"include": entries}
     print(json.dumps(matrix, indent=2))

@@ -106,19 +106,31 @@ CANONICAL = [
 BY_LOWER = {c.lower(): c for c in CANONICAL}
 
 
+def write_lock(lock: dict[str, Any]) -> str:
+    """`nix/addons.json`, in the one form both writers of it produce.
+
+    `nix fmt` runs `jsonfmt` over this file too, so the two have to agree or every update
+    and every format would undo the other. They do, and the non-obvious half is escaping:
+    several descriptions carry characters like `≥`, Python escapes them to `\\u2265`, and
+    `jsonfmt` leaves whatever it finds alone. (`jq` does not — it unescapes, which is why
+    editing this file with `jq` introduces a diff that comes straight back.)
+    """
+    return json.dumps(lock, indent=2, sort_keys=True) + "\n"
+
+
 def fetch_catalog(refresh: bool = False) -> dict[str, list[dict[str, Any]]]:
     """The catalogue, from disk unless asked for a fresh copy."""
     if CACHE.exists() and not refresh:
         return json.loads(CACHE.read_text(encoding="utf-8"))
 
     log.info("downloading %s", CATALOG_URL)
-    with urllib.request.urlopen(CATALOG_URL) as response:  # noqa: S310 — fixed https URL
+    with urllib.request.urlopen(CATALOG_URL) as response:
         blob = response.read()
 
     # The Addon Manager verifies the companion .sha256 before trusting the zip, so this
     # does too: it is the only integrity signal the endpoint offers.
     try:
-        with urllib.request.urlopen(CATALOG_URL + ".sha256") as response:  # noqa: S310
+        with urllib.request.urlopen(CATALOG_URL + ".sha256") as response:
             want = response.read().decode().split()[0].strip()
         got = hashlib.sha256(blob).hexdigest()
         if want != got:
@@ -148,6 +160,7 @@ def package_xml(entry: dict[str, Any]) -> ET.Element | None:
 def describe(name: str, entry: dict[str, Any]) -> dict[str, Any]:
     """Everything worth knowing about one catalogue entry, flattened."""
     root = package_xml(entry)
+
     def text(tag: str) -> str:
         # `if root:` would be the bug the DeprecationWarning warns about: an Element with
         # no children is falsy today and truthy in a future Python.
@@ -196,9 +209,16 @@ def describe(name: str, entry: dict[str, Any]) -> dict[str, Any]:
 def entries(catalog: dict[str, list[dict[str, Any]]], name: str) -> dict[str, Any]:
     """The entry to package for `name`.
 
-    Twelve addons offer two branches and one offers four — a `main` and a `development`,
-    say. Take the first, which is the catalogue's own default ordering, unless a later
-    one is explicitly the stable branch.
+    Thirteen of the 173 offer more than one branch — twelve offer two and one offers
+    four, a `main` beside a `development`, say. **The first is taken, always**, which is
+    the order the catalogue itself lists them in. Nothing here reads the branch names or
+    prefers a stable one; that ordering is upstream's, and this does not second-guess it.
+
+    Of what this repo locks, exactly one is affected: `FreeCAD-Ribbon` offers `main` and
+    `Develop`, and gets `main`. That is the right answer, but it is the right answer by
+    upstream's ordering rather than by a decision made here — so if a catalogue entry ever
+    leads with a development branch, this takes it silently. `nix/addons.json` records the
+    `ref` of whatever was chosen, which is where you would notice.
     """
     found = catalog.get(name)
     if not found:
@@ -241,7 +261,9 @@ def cmd_list(args: argparse.Namespace) -> int:
     if unresolved:
         print(f"  {len(unresolved)} with a licence this cannot resolve (marked ?)")
     if ancient:
-        print(f"  {len(ancient)} untouched upstream for over two years — a warning, not a verdict")
+        print(
+            f"  {len(ancient)} untouched upstream for over two years — a warning, not a verdict"
+        )
     return 0
 
 
@@ -249,7 +271,15 @@ def prefetch(repository: str, rev: str) -> str:
     """The SRI hash of a repository at a revision. The one thing the catalogue lacks."""
     log.info("prefetching %s@%s", repository, rev[:12])
     proc = subprocess.run(
-        ["nix-prefetch-git", "--url", repository, "--rev", rev, "--quiet", "--no-add-path"],
+        [
+            "nix-prefetch-git",
+            "--url",
+            repository,
+            "--rev",
+            rev,
+            "--quiet",
+            "--no-add-path",
+        ],
         capture_output=True,
         text=True,
         check=True,
@@ -259,7 +289,9 @@ def prefetch(repository: str, rev: str) -> str:
 
 def cmd_add(args: argparse.Namespace) -> int:
     catalog = fetch_catalog(args.refresh)
-    lock: dict[str, Any] = json.loads(LOCK.read_text(encoding="utf-8")) if LOCK.exists() else {}
+    lock: dict[str, Any] = (
+        json.loads(LOCK.read_text(encoding="utf-8")) if LOCK.exists() else {}
+    )
 
     for name in args.name:
         info = describe(name, entries(catalog, name))
@@ -277,7 +309,7 @@ def cmd_add(args: argparse.Namespace) -> int:
             )
 
     LOCK.parent.mkdir(parents=True, exist_ok=True)
-    LOCK.write_text(json.dumps(lock, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    LOCK.write_text(write_lock(lock), encoding="utf-8")
     print(f"wrote {LOCK} ({len(lock)} addons)")
     return 0
 
@@ -307,7 +339,7 @@ def cmd_update(args: argparse.Namespace) -> int:
     if not moved:
         print("nothing moved")
         return 0
-    LOCK.write_text(json.dumps(lock, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    LOCK.write_text(write_lock(lock), encoding="utf-8")
     for line in moved:
         print(f"  {line}")
     return 0
@@ -329,7 +361,9 @@ def main() -> int:
     add.add_argument("name", nargs="+")
     add.set_defaults(func=cmd_add)
 
-    up = sub.add_parser("update", help="move locked addons to the catalogue's current pin")
+    up = sub.add_parser(
+        "update", help="move locked addons to the catalogue's current pin"
+    )
     up.add_argument("name", nargs="*")
     up.set_defaults(func=cmd_update)
 

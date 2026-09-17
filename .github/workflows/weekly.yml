@@ -1,0 +1,39 @@
+name: FreeCAD weekly
+on:
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: freecad-weekly
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: vars.WEEKLY_ENABLED == 'true' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ${{ fromJSON(vars.WEEKLY_RUNNER || '"ubuntu-24.04"') }}
+    timeout-minutes: 350
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      # This installs Nix; it does not configure or upload to a Cachix cache.
+      - uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            max-jobs = 1
+            cores = 2
+            extra-substituters = ${{ vars.WEEKLY_CACHE_URL }}
+            extra-trusted-public-keys = ${{ vars.WEEKLY_CACHE_PUBLIC_KEY }}
+      - name: Build, test, cache and publish the weekly
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          WEEKLY_SYSTEM: ${{ vars.WEEKLY_SYSTEM || 'x86_64-linux' }}
+          WEEKLY_CACHE_URI: ${{ vars.WEEKLY_CACHE_URI }}
+          NIX_SIGNING_KEY: ${{ secrets.NIX_SIGNING_KEY }}
+          # Native Nix S3 stores also work with compatible providers via ?endpoint=.
+          AWS_ACCESS_KEY_ID: ${{ secrets.WEEKLY_CACHE_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.WEEKLY_CACHE_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ vars.WEEKLY_CACHE_REGION || 'us-east-1' }}
+        run: nix develop --no-update-lock-file -c python3 tools/weekly.py --publish

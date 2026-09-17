@@ -12,20 +12,20 @@ target-version = "py314"
 
 [tool.ruff.lint]
 select = [
-    "E",
-    "F",
-    "W",
-    "I",
-    "UP",
-    "B",
-    "SIM",
-    "RET",
-    "C4",
-    "FA",
-    "G",
-    "PGH",
-    "PT",
-    "RUF",
+  "E",
+  "F",
+  "W",
+  "I",
+  "UP",
+  "B",
+  "SIM",
+  "RET",
+  "C4",
+  "FA",
+  "G",
+  "PGH",
+  "PT",
+  "RUF",
 ]
 
 # stepZ.py lives under module/, not at the root, so ruff's own src detection does not
@@ -42,8 +42,5 @@ mypy_path = "module"
 # executes at startup rather than a module anything imports, so it is excluded from
 # type checking outright.
 [[tool.mypy.overrides]]
-module = [
-    "FreeCAD",
-    "ImportGui",
-]
+module = ["FreeCAD", "ImportGui"]
 ignore_missing_imports = true

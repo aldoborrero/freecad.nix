@@ -1,0 +1,30 @@
+# The extensions table in README.md is generated. This fails the PR that lets it drift.
+#
+# `nix flake check` already runs the same check — `nix/checks/readme-current.nix` — so
+# this is not the only line of defence. It is here because it is *fast*: the full flake
+# check builds FreeCAD, and a stale table should not wait on a C++ compile to be
+# reported.
+name: Check README
+on:
+  pull_request:
+    paths:
+      - 'README.md'
+      - 'nix/packages/**'
+      - 'nix/addons.json'
+      - 'nix/lib/addons.nix'
+      - 'nix/lib/addon-meta.nix'
+      - 'nix/checks/readme-current.nix'
+      - 'tools/gen_readme.py'
+      - '.github/workflows/check-readme.yml'
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v31
+      # Runs the generator rather than the check, so a failure prints the diff the
+      # author has to make rather than only the fact that one exists.
+      - run: nix run .#gen-readme
+      - run: git diff --exit-code README.md

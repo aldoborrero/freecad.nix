@@ -7,11 +7,12 @@ self-hosted runner, or by hand in a terminal.
 
 from __future__ import annotations
 
+import hashlib
+import json
 import logging
 import os
 import subprocess
 from pathlib import Path
-from typing import Any
 
 log = logging.getLogger(__name__)
 
@@ -49,4 +50,19 @@ def tree_state() -> str:
     caller that reports `changed=true` because of *that* is worse than useless — it opens
     a pull request for a target that did not move. Compare this before and after instead.
     """
-    return run(["git", "status", "--porcelain"], capture=True).stdout
+    status = run(["git", "status", "--porcelain"], capture=True).stdout
+    diff = run(
+        ["git", "diff", "--no-ext-diff", "--no-textconv", "--binary", "HEAD"],
+        capture=True,
+    ).stdout
+    untracked = run(
+        ["git", "ls-files", "--others", "--exclude-standard", "-z"], capture=True
+    ).stdout
+    contents = []
+    for name in sorted(filter(None, untracked.split("\0"))):
+        path = ROOT / name
+        data = (
+            os.fsencode(os.readlink(path)) if path.is_symlink() else path.read_bytes()
+        )
+        contents.append((name, path.lstat().st_mode, hashlib.sha256(data).hexdigest()))
+    return json.dumps((status, diff, contents))

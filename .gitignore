@@ -3,3 +3,8 @@ result-*
 .direnv/
 .scratch/
 __pycache__/
+
+# Agent skills, installed per-checkout by `npx skills add`.
+.agents/
+.claude/
+skills-lock.json

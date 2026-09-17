@@ -5,10 +5,9 @@
 # with "Path 'nix/lib/default.nix' does not exist in Git repository" — an error that names
 # a file nothing here ever asked for.
 #
-# `mkAddon` is re-exported rather than defined here because a package needs it at
-# evaluation time, and `flake.lib` is not in a package's scope. The packages therefore
-# `import ../../lib/mkAddon.nix` directly; this is for anything consuming the flake from
-# outside.
+# Keep this ignoring its argument. The packages reach `mkAddon` through `flake.lib`, so
+# anything here that touched `perSystem` or the packages would make all sixteen recurse.
 _: {
   mkAddon = import ./mkAddon.nix;
+  mkFreeCAD = import ./mkFreeCAD.nix;
 }

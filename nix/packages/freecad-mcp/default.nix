@@ -9,10 +9,8 @@
 # same way Timeline's does — which is what lets `nix/checks/addon-shapes.nix` verify it
 # without knowing anything special about this package.
 #
-# `fetchFromGitHub` rather than a `flake = false` input, for the reason in flake.nix: a
-# source tree pinned as an input carries no version and no meta, so both would have to be
-# written here and kept honest by hand. Upstream tags its releases (`v0.1.21` is the
-# pinned rev), so `nix-update` can move this on its own.
+# `fetchFromGitHub` rather than a `flake = false` input, for the reason in flake.nix.
+# Upstream tags its releases, so `nix-update` can move this on its own.
 { pkgs, ... }:
 let
   inherit (pkgs) lib python3Packages;

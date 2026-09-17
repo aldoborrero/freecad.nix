@@ -1,4 +1,21 @@
 {
+  "Color-Palette-Theme": {
+    "content": [
+      "preferencepack",
+      "workbench"
+    ],
+    "description": "Choose your colors with the \"ColorPalette\" Theme and increase the focus on objects and texts(FreeCAD v1.1.0 \u2265)",
+    "hash": "sha256-4PbxP133EBeEEut172LUEK1jC9FJm7GNlDajgNuXKqc=",
+    "homepage": "https://github.com/altangarts/FreeCAD-Themes-ColorPalette",
+    "license": "LGPL-2.1-or-later",
+    "name": "Color-Palette-Theme",
+    "ref": "main",
+    "repository": "https://github.com/altangarts/FreeCAD-Themes-ColorPalette",
+    "rev": "0382442822e6d4cc83181dd44c3180fa3fd1d1be",
+    "spdx": "LGPL-2.1-or-later",
+    "tag": null,
+    "version": "2.3.3"
+  },
   "Curves": {
     "content": [
       "workbench"
@@ -14,6 +31,38 @@
     "spdx": "LGPL-2.1-or-later",
     "tag": null,
     "version": "0.6.75"
+  },
+  "DynamicData": {
+    "content": [
+      "workbench"
+    ],
+    "description": "Container object for holding custom properties, alternative to spreadsheet",
+    "hash": "sha256-M95NPPVMKPanox4y1kukNbV7VrQY07LsaTeyHUCSRSo=",
+    "homepage": "https://github.com/mwganson/DynamicData",
+    "license": "LGPL-2.1-or-later",
+    "name": "DynamicData",
+    "ref": "master",
+    "repository": "https://github.com/mwganson/DynamicData",
+    "rev": "36ca4e209610c8f84067d8145835d5b5a12fb3f6",
+    "spdx": "LGPL-2.1-or-later",
+    "tag": null,
+    "version": "2.78"
+  },
+  "FreeCAD-Ribbon": {
+    "content": [
+      "workbench"
+    ],
+    "description": "A Ribbon interface for FreeCAD",
+    "hash": "sha256-8G5P2EvXfHDpzz7AKe8jZXtV1R2xsy2REVBpbRZ6C50=",
+    "homepage": "https://codeberg.org/apebbers/FreeCAD-Ribbon/wiki",
+    "license": "GPL-3.0-or-later",
+    "name": "FreeCAD-Ribbon",
+    "ref": "main",
+    "repository": "https://github.com/APEbbers/FreeCAD-Ribbon",
+    "rev": "ef4f473743094e0f61f95a76b4468d3f42f417f0",
+    "spdx": "GPL-3.0-or-later",
+    "tag": null,
+    "version": "1.11.3"
   },
   "Gridfinity": {
     "content": [
@@ -31,6 +80,119 @@
     "tag": "v0.12.4",
     "version": "0.12.4"
   },
+  "KiConnect": {
+    "content": [
+      "workbench"
+    ],
+    "description": "PCB Syncronization with KiCAD v9+",
+    "hash": "sha256-POAXElyKZO0QM9yDeiasXQu1SnMAde0tjSh2e7Ay0dA=",
+    "homepage": "https://codeberg.org/kiconnect/KiConnect",
+    "license": "LGPL-2.1-or-later",
+    "name": "KiConnect",
+    "ref": "release",
+    "repository": "https://codeberg.org/kiconnect/KiConnect",
+    "rev": "0e9d274068267f5d4ddababc2bc652af48f8e0ea",
+    "spdx": "LGPL-2.1-or-later",
+    "tag": "v1.0.1",
+    "version": "1.0.1"
+  },
+  "MeshRemodel": {
+    "content": [
+      "workbench"
+    ],
+    "description": "Workbench for remodeling and repairing mesh objects.",
+    "hash": "sha256-eDtXj8DKXN28k6hhXzstnBrs2f04mvSlpP09FCX/sx0=",
+    "homepage": "https://github.com/mwganson/MeshRemodel",
+    "license": "LGPL-2.1-or-later",
+    "name": "MeshRemodel",
+    "ref": "master",
+    "repository": "https://github.com/mwganson/MeshRemodel",
+    "rev": "d53719ff4e9254e1d7b8795774013f15975ac476",
+    "spdx": "LGPL-2.1-or-later",
+    "tag": null,
+    "version": "1.11.0"
+  },
+  "PieMenu": {
+    "content": [
+      "workbench"
+    ],
+    "description": "The PieMenu module is a tool to accelerate and simplify your workflow in usage of FreeCAD.",
+    "hash": "sha256-CglVTabiR4cK9Q80344q6S7R8zcdD02tF1WXbAhfrFk=",
+    "homepage": "https://github.com/Grubuntu/PieMenu",
+    "license": "LGPL-2.1-or-later",
+    "name": "PieMenu",
+    "ref": "master",
+    "repository": "https://github.com/Grubuntu/PieMenu",
+    "rev": "e95beb9ca7cb89cdd803b1e1e6aff222d87e11a8",
+    "spdx": "LGPL-2.1-or-later",
+    "tag": null,
+    "version": "1.13"
+  },
+  "Silk": {
+    "content": [
+      "workbench"
+    ],
+    "description": "NURBS Surface modeling tools focused on low degree and seam continuity",
+    "hash": "sha256-svAKAI/FF/j0HkLb5j2utSXcbSbuPHd7WAoba25EgQk=",
+    "homepage": "https://github.com/edwardvmills/Silk",
+    "license": "GPL-3.0-or-later",
+    "name": "Silk",
+    "ref": "master",
+    "repository": "https://github.com/edwardvmills/Silk",
+    "rev": "4b1d713b83b906eaba9c1ec237ff2f40625ba287",
+    "spdx": "GPL-3.0-or-later",
+    "tag": null,
+    "version": "0.4.0"
+  },
+  "fasteners": {
+    "content": [
+      "workbench"
+    ],
+    "description": "Some common fasteners and fastener tools for FreeCAD.",
+    "hash": "sha256-7f06/bmk+QtVZ+9i5EATqOAkuaLxgy1FGQ6JKgEwx+k=",
+    "homepage": "https://github.com/shaise/FreeCAD_FastenersWB",
+    "license": "GPL-2.0-or-later",
+    "name": "fasteners",
+    "ref": "master",
+    "repository": "https://github.com/shaise/FreeCAD_FastenersWB",
+    "rev": "6d69e039e428087e574bef6f67b7b489309b0ac5",
+    "spdx": "GPL-2.0-or-later",
+    "tag": null,
+    "version": "0.5.64"
+  },
+  "free2ki": {
+    "content": [
+      "workbench"
+    ],
+    "description": "Export your 3D models to VRML files, with correctly applied rotation and scaling, for use in KiCad as well as Blender.",
+    "hash": "sha256-3l4+vc3r8NITykbxvppn0fK40RwXaFIo1IuaIslkUa0=",
+    "homepage": "https://github.com/30350n/free2ki",
+    "license": "GPL-3.0-or-later",
+    "name": "free2ki",
+    "ref": "freecad-addons",
+    "repository": "https://github.com/30350n/free2ki",
+    "rev": "f0fc194bac9b74f547de9da159ca3404ec4901f7",
+    "spdx": "GPL-3.0-or-later",
+    "tag": "v1.1.2",
+    "version": "1.1.2"
+  },
+  "freecad.gears": {
+    "content": [
+      "depend",
+      "workbench"
+    ],
+    "description": "A gear workbench for FreeCAD",
+    "hash": "sha256-ViRVZVyOjJf4e7Ml4obuW8RYwZaGWfLE1ErWX+aaO4s=",
+    "homepage": "https://github.com/looooo/freecad.gears",
+    "license": "GPL-3.0-or-later",
+    "name": "freecad.gears",
+    "ref": "master",
+    "repository": "https://github.com/looooo/freecad.gears",
+    "rev": "00af74cbe3dd5c6ba0c394dd2914cccd95af0af2",
+    "spdx": "GPL-3.0-or-later",
+    "tag": null,
+    "version": "1.3"
+  },
   "kicadStepUpMod": {
     "content": [
       "workbench"
@@ -46,5 +208,53 @@
     "spdx": null,
     "tag": null,
     "version": "11.09.5"
+  },
+  "lattice2": {
+    "content": [
+      "workbench"
+    ],
+    "description": "Tools and arrays of all sorts and kinds, and local coordinate systems",
+    "hash": "sha256-FIQtlJj22Dvfn2j4sPC+huAPSCxTOmu6HsaV3rRXUMo=",
+    "homepage": "https://github.com/DeepSOIC/Lattice2",
+    "license": "LGPL-2.0-or-later",
+    "name": "lattice2",
+    "ref": "master",
+    "repository": "https://github.com/DeepSOIC/Lattice2",
+    "rev": "9595449b80a634179ecaeae2525b91c93dc52cb1",
+    "spdx": "LGPL-2.0-or-later",
+    "tag": null,
+    "version": "1.1"
+  },
+  "pcb": {
+    "content": [
+      "workbench"
+    ],
+    "description": "Printed Circuit Board (PCB) Workbench for FreeCAD",
+    "hash": "sha256-oy9SFFZ+IoEoy93dvYeRX9AjomMFIJk/yJBFhflMQlk=",
+    "homepage": "https://github.com/marmni/FreeCAD-PCB",
+    "license": "AGPLv3.0",
+    "name": "pcb",
+    "ref": "master",
+    "repository": "https://github.com/marmni/FreeCAD-PCB",
+    "rev": "6dd9f09fa2a1bde2520eb062eee048b44cf85ad1",
+    "spdx": null,
+    "tag": null,
+    "version": "6.2023.1"
+  },
+  "sheetmetal": {
+    "content": [
+      "workbench"
+    ],
+    "description": "A simple sheet metal tools workbench for FreeCAD.",
+    "hash": "sha256-U1aiVUJ3anhDH207Jx0o34pDFe9F5Oju6TIVr4lAsnI=",
+    "homepage": "https://github.com/shaise/FreeCAD_SheetMetal",
+    "license": "LGPL-2.1-or-later",
+    "name": "sheetmetal",
+    "ref": "master",
+    "repository": "https://github.com/shaise/FreeCAD_SheetMetal",
+    "rev": "846b9e23aca1d6bec5822c581be7b6d1138083d1",
+    "spdx": "LGPL-2.1-or-later",
+    "tag": null,
+    "version": "0.8.21"
   }
 }

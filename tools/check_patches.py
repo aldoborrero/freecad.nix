@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -61,8 +62,17 @@ class Landing:
 def apply_one(tree: Path, patch: Path) -> tuple[list[Landing], list[str]]:
     """Apply `patch` inside `tree`, returning where each hunk landed and what failed."""
     proc = subprocess.run(
-        ["patch", "-p1", "--forward", "--no-backup-if-mismatch", "-i", str(patch)],
+        [
+            "patch",
+            "--batch",
+            "-p1",
+            "--forward",
+            "--no-backup-if-mismatch",
+            "-i",
+            str(patch.resolve()),
+        ],
         cwd=tree,
+        env={**os.environ, "LC_ALL": "C"},
         capture_output=True,
         text=True,
         check=False,
@@ -78,7 +88,9 @@ def apply_one(tree: Path, patch: Path) -> tuple[list[Landing], list[str]]:
             continue
         if m := FAILED.search(line):
             name = STORE_PREFIX.sub("", patch.name)
-            failures.append(f"{name}::{current}::{m.group('hunk')}")
+            failures.append(
+                f"hunk did not apply at all: {name}::{current}::{m.group('hunk')}"
+            )
             continue
         if m := HUNK.search(line):
             landings.append(
@@ -91,6 +103,11 @@ def apply_one(tree: Path, patch: Path) -> tuple[list[Landing], list[str]]:
                     int(m.group("offset") or 0),
                 )
             )
+    # Missing files and malformed patches need not produce a "Hunk ... FAILED" line.
+    if proc.returncode and not failures:
+        failures.append(
+            f"{patch.name}: patch exited with status {proc.returncode}:\n{out.strip()}"
+        )
     return landings, failures
 
 
@@ -106,14 +123,14 @@ def check(source: Path, patches: list[Path], expected: dict[str, str]) -> int:
             got, bad = apply_one(tree, patch)
             landings += got
             failures += bad
+            if bad:
+                break
 
     worst = max((abs(x.offset) for x in landings), default=0)
     fuzzed = [x for x in landings if x.fuzz]
     print(f"  {len(landings)} hunks applied, largest offset {worst} lines")
 
-    problems: list[str] = []
-    for name in failures:
-        problems.append(f"hunk did not apply at all: {name}")
+    problems = failures.copy()
 
     for x in fuzzed:
         why = expected.get(x.key)

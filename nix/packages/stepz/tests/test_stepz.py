@@ -101,7 +101,9 @@ def test_the_temporary_step_does_not_outlive_the_import(
 ) -> None:
     src = _archive(tmp_path / "C_0402.stpZ", {"C_0402.step": STEP})
     seen: list[str] = []
-    import_gui.insert = lambda path, doc: seen.append(path)  # type: ignore[method-assign]
+    import_gui.insert = (  # type: ignore[method-assign]
+        lambda path, doc: seen.append(path)
+    )
 
     stepZ.insert(str(src), "Board")
 

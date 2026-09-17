@@ -1,10 +1,8 @@
-# kicadStepUp: imports a .kicad_pcb into FreeCAD with its component models.
-#
 # Needed beside `stepz`, not instead of it: every 3D model in nixpkgs' KiCad library is
 # a `.stpZ`, and StepUp reaches those through `stepZ.insert()`, a module FreeCAD does
 # not ship.
-{ pkgs, ... }:
-import ../../lib/mkAddon.nix { inherit pkgs; } "kicadStepUpMod" {
+{ pkgs, flake, ... }:
+flake.lib.mkAddon { inherit pkgs; } "kicadStepUpMod" {
   pname = "kicad-stepup";
 
   # Declared by hand because the catalogue's string is `AGPLv3.0`, which names a version

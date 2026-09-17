@@ -21,28 +21,15 @@
 let
   inherit (pkgs) lib;
 
-  # Listed rather than discovered: a check that enumerates whatever it finds cannot fail
-  # when something stops being found.
-  addons = {
-    inherit (perSystem.self)
-      gridfinity
-      curves
-      kicad-stepup
-      freecad-timeline
-      slicercad
-      # Not an addon package as such — a Python application that happens to carry a
-      # workbench in `share/`. It is in this list precisely because `modulePath` makes
-      # that indistinguishable from here.
-      freecad-mcp
-      ;
-  };
+  addons = import ../lib/addons.nix perSystem;
 
   modulePath =
-    addon:
+    entry:
     let
-      sub = addon.passthru.modulePath or null;
+      inherit (entry) package;
+      sub = package.passthru.modulePath or null;
     in
-    "${addon}" + lib.optionalString (sub != null) "/${sub}";
+    "${package}" + lib.optionalString (sub != null) "/${sub}";
 in
 pkgs.runCommand "addon-shapes" { nativeBuildInputs = [ pkgs.python3 ]; } ''
   ${lib.concatStringsSep "\n" (
