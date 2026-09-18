@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-labelledby="title description">
+  <title id="title">freecad.nix</title>
+  <desc id="description">FreeCAD weekly builds, packaged for Nix. An original isometric CAD block with a circular bore, construction lines and dimension marks on a dark drafting grid.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#101b2c"/>
+      <stop offset="1" stop-color="#1b3049"/>
+    </linearGradient>
+    <linearGradient id="top" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#ff9a83"/>
+      <stop offset="1" stop-color="#ed6469"/>
+    </linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#88b9dc" stroke-opacity=".08"/>
+    </pattern>
+    <pattern id="major-grid" width="160" height="160" patternUnits="userSpaceOnUse">
+      <rect width="160" height="160" fill="url(#grid)"/>
+      <path d="M160 0H0V160" fill="none" stroke="#88b9dc" stroke-opacity=".1"/>
+    </pattern>
+    <clipPath id="bore">
+      <ellipse cx="949" cy="136" rx="48" ry="27.5"/>
+    </clipPath>
+    <marker id="arrow" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M8 0 0 4 8 8" fill="none" stroke="#88b9dc" stroke-width="1.3"/>
+    </marker>
+  </defs>
+
+  <rect width="1280" height="360" rx="20" fill="url(#background)"/>
+  <rect width="1280" height="360" rx="20" fill="url(#major-grid)"/>
+  <path d="M32 32h16m-8-8v16M1232 32h16m-8-8v16M32 328h16m-8-8v16M1232 328h16m-8-8v16" stroke="#88b9dc" stroke-opacity=".45"/>
+
+  <g font-family="DejaVu Sans, Verdana, sans-serif">
+    <rect x="70" y="70" width="28" height="4" rx="2" fill="#f17a76"/>
+    <text x="112" y="78" fill="#a3c8e3" font-size="13" letter-spacing="3">PARAMETRIC CAD / NIX</text>
+    <text x="64" y="178" fill="#f1f6fc" font-size="80" font-weight="700" letter-spacing="-4">freecad<tspan fill="#8dc7ed">.nix</tspan></text>
+    <text x="70" y="224" fill="#c0d2e2" font-size="23">Weekly builds. Reproducible environments.</text>
+    <path d="M70 255H618" stroke="#3f5c76"/>
+    <g fill="#a3c8e3" font-size="12" letter-spacing="2">
+      <text x="70" y="286">PIN</text>
+      <text x="195" y="286">BUILD</text>
+      <text x="343" y="286">VERIFY</text>
+      <text x="509" y="286">PUBLISH</text>
+    </g>
+    <path d="M119 281h47m-5-4 5 4-5 4M264 281h51m-5-4 5 4-5 4M428 281h51m-5-4 5 4-5 4" fill="none" stroke="#668aa8"/>
+  </g>
+
+  <g fill="none" stroke="#80b5dd" stroke-width="1">
+    <path d="m749 268 200-115 200 115-200 115Z" opacity=".15" transform="translate(0 -50)"/>
+    <path d="M949 32v295M718 151h470" stroke-dasharray="5 7" opacity=".3"/>
+    <ellipse cx="949" cy="179" rx="207" ry="118" opacity=".13"/>
+    <path d="m781 133 168-97 168 97v104l-168 97-168-97Z" stroke-dasharray="3 7" opacity=".35"/>
+  </g>
+
+  <path d="m808 230 141 82 164-95-141-82Z" fill="#070f1b" opacity=".35"/>
+  <path d="m809 136 140 81v80l-140-81Z" fill="#c75361" stroke="#f58a88" stroke-linejoin="round"/>
+  <path d="m949 217 140-81v80l-140 81Z" fill="#843e58" stroke="#db7884" stroke-linejoin="round"/>
+  <path d="m809 136 140-81 140 81-140 81Z" fill="url(#top)" stroke="#ffbeb1" stroke-linejoin="round"/>
+  <ellipse cx="949" cy="136" rx="48" ry="27.5" fill="#683948"/>
+  <g clip-path="url(#bore)">
+    <ellipse cx="949" cy="158" rx="48" ry="27.5" fill="#182a3f"/>
+    <path d="M901 136v26m96-26v26" stroke="#e79593" opacity=".5"/>
+  </g>
+  <ellipse cx="949" cy="136" rx="48" ry="27.5" fill="none" stroke="#ffcebe" stroke-width="1.5"/>
+  <path d="m819 213 120 69m20-1 120-69" fill="none" stroke="#f1a2a5" stroke-opacity=".35"/>
+
+  <g fill="none" stroke="#88b9dc" stroke-width="1.2">
+    <path d="m809 231-24 14m164 67-24 14" opacity=".6"/>
+    <path d="m792 247 128 74" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <path d="m1103 135 35-20m-35 101 35-20" opacity=".6"/>
+    <path d="M1129 122v77" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <path d="m963 117 74-43h62"/>
+    <circle cx="963" cy="117" r="3" fill="#182a3f"/>
+    <path d="M939 136h20m-10-10v20" stroke-dasharray="2 2" opacity=".7"/>
+  </g>
+  <g fill="#a3c8e3" font-family="DejaVu Sans Mono, monospace" font-size="12">
+    <text x="1106" y="78">⌀ 24</text>
+    <text x="1140" y="165">16</text>
+    <text x="832" y="310" transform="rotate(30 832 310)">48</text>
+  </g>
+</svg>

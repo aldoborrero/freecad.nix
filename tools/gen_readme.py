@@ -72,13 +72,15 @@ def entry(name: str, info: dict) -> str:
         f"- **Version**: {info['version']}",
         f"- **Licence**: {info['license']}",
     ]
+    if info.get("homepage"):
+        lines.append(f"- **Homepage**: {info['homepage']}")
 
     # What you actually type. An addon is not run, it is handed to FreeCAD — and for the
     # ones whose module sits below the store root, the path has a suffix.
     path = f'"$(nix build --no-link --print-out-paths {REPO}#{name})'
     path += f'/{info["modulePath"]}"' if info.get("modulePath") else '"'
     lines += [
-        f"- **Use**: `nix run {REPO}#freecad-unstable -- --module-path {path}`",
+        f"- **Use**: `nix run {REPO}#freecad-weekly -- --module-path {path}`",
         f"- **Nix**: [{info['sourceFile']}]({info['sourceFile']})",
         "",
         "</details>",
