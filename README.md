@@ -115,7 +115,7 @@ Expand an entry for its version, upstream project and usage command.
 <summary><strong>freecad-gears</strong> — A gear workbench for FreeCAD</summary>
 
 - **Source**: FreeCAD's catalogue
-- **Version**: 1.3
+- **Version**: 1.4.0
 - **Licence**: GPL-3.0-or-later
 - **Homepage**: https://github.com/looooo/freecad.gears
 - **Use**: `nix run github:aldoborrero/freecad.nix#freecad-weekly -- --module-path "$(nix build --no-link --print-out-paths github:aldoborrero/freecad.nix#freecad-gears)"`

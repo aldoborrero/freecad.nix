@@ -178,20 +178,19 @@
   },
   "freecad.gears": {
     "content": [
-      "depend",
       "workbench"
     ],
     "description": "A gear workbench for FreeCAD",
-    "hash": "sha256-ViRVZVyOjJf4e7Ml4obuW8RYwZaGWfLE1ErWX+aaO4s=",
+    "hash": "sha256-BLEIdkRe/eX+ef5WrqCnFB+HxBqu/on26dyoUH0q16w=",
     "homepage": "https://github.com/looooo/freecad.gears",
     "license": "GPL-3.0-or-later",
     "name": "freecad.gears",
     "ref": "master",
     "repository": "https://github.com/looooo/freecad.gears",
-    "rev": "00af74cbe3dd5c6ba0c394dd2914cccd95af0af2",
+    "rev": "83ec154b1925347622b61812f75d2ed51e956b9f",
     "spdx": "GPL-3.0-or-later",
     "tag": null,
-    "version": "1.3"
+    "version": "1.4.0"
   },
   "kicadStepUpMod": {
     "content": [
