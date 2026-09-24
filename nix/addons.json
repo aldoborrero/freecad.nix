@@ -198,16 +198,16 @@
       "workbench"
     ],
     "description": "A bidirectional ECAD/MCAD collaboration between KiCAD and FreeCAD.",
-    "hash": "sha256-ukJtWY1dmtWyr+b1sXF3y/cfQwvJAT07cGOfqgpwnoE=",
+    "hash": "sha256-VXhrY+lF5/9iToU1RYYzE90oPjiPbpVJ84B5WZtK4Xg=",
     "homepage": "https://github.com/easyw/kicadStepUpMod",
     "license": "AGPLv3.0",
     "name": "kicadStepUpMod",
     "ref": "master",
     "repository": "https://github.com/easyw/kicadStepUpMod",
-    "rev": "f5cd790fd5e88925e598b67719ebcb25b46b6a6c",
+    "rev": "3db98be23aae40413eab041f19de5ab2e168157e",
     "spdx": null,
     "tag": null,
-    "version": "11.09.5"
+    "version": "11.09.6"
   },
   "lattice2": {
     "content": [

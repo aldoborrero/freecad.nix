@@ -191,7 +191,7 @@ Expand an entry for its version, upstream project and usage command.
 <summary><strong>kicad-stepup</strong> — A bidirectional ECAD/MCAD collaboration between KiCAD and FreeCAD.</summary>
 
 - **Source**: FreeCAD's catalogue
-- **Version**: 11.09.5
+- **Version**: 11.09.6
 - **Licence**: AGPL-3.0-only
 - **Homepage**: https://github.com/easyw/kicadStepUpMod
 - **Use**: `nix run github:aldoborrero/freecad.nix#freecad-weekly -- --module-path "$(nix build --no-link --print-out-paths github:aldoborrero/freecad.nix#kicad-stepup)"`
