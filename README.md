@@ -103,7 +103,7 @@ Expand an entry for its version, upstream project and usage command.
 <summary><strong>fasteners</strong> — Some common fasteners and fastener tools for FreeCAD.</summary>
 
 - **Source**: FreeCAD's catalogue
-- **Version**: 0.5.64
+- **Version**: 0.5.67
 - **Licence**: GPL-2.0-or-later
 - **Homepage**: https://github.com/shaise/FreeCAD_FastenersWB
 - **Use**: `nix run github:aldoborrero/freecad.nix#freecad-weekly -- --module-path "$(nix build --no-link --print-out-paths github:aldoborrero/freecad.nix#fasteners)"`

@@ -149,16 +149,16 @@
       "workbench"
     ],
     "description": "Some common fasteners and fastener tools for FreeCAD.",
-    "hash": "sha256-7f06/bmk+QtVZ+9i5EATqOAkuaLxgy1FGQ6JKgEwx+k=",
+    "hash": "sha256-5Thrf7AnyXZJfn2nguEmCT+Q0wXNcnKvWzOtwsnIeHI=",
     "homepage": "https://github.com/shaise/FreeCAD_FastenersWB",
     "license": "GPL-2.0-or-later",
     "name": "fasteners",
     "ref": "master",
     "repository": "https://github.com/shaise/FreeCAD_FastenersWB",
-    "rev": "6d69e039e428087e574bef6f67b7b489309b0ac5",
+    "rev": "fddd07af422b7d3a69098b32333711c5eeae184c",
     "spdx": "GPL-2.0-or-later",
-    "tag": null,
-    "version": "0.5.64"
+    "tag": "V0.5.67-beta",
+    "version": "0.5.67"
   },
   "free2ki": {
     "content": [
