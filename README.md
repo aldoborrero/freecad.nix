@@ -77,7 +77,7 @@ Expand an entry for its version, upstream project and usage command.
 <summary><strong>meshremodel</strong> — Workbench for remodeling and repairing mesh objects.</summary>
 
 - **Source**: FreeCAD's catalogue
-- **Version**: 1.11.0
+- **Version**: 1.12.0
 - **Licence**: LGPL-2.1-or-later
 - **Homepage**: https://github.com/mwganson/MeshRemodel
 - **Use**: `nix run github:aldoborrero/freecad.nix#freecad-weekly -- --module-path "$(nix build --no-link --print-out-paths github:aldoborrero/freecad.nix#meshremodel)"`
