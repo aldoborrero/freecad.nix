@@ -226,10 +226,10 @@ Expand an entry for its version, upstream project and usage command.
 </details>
 
 <details>
-<summary><strong>freecad-ribbon</strong> — A Ribbon interface for FreeCAD</summary>
+<summary><strong>freecad-ribbon</strong> — A customizable ribbon interface for FreeCAD</summary>
 
 - **Source**: FreeCAD's catalogue
-- **Version**: 1.11.3
+- **Version**: 1.11.10
 - **Licence**: GPL-3.0-or-later
 - **Homepage**: https://codeberg.org/apebbers/FreeCAD-Ribbon/wiki
 - **Use**: `nix run github:aldoborrero/freecad.nix#freecad-weekly -- --module-path "$(nix build --no-link --print-out-paths github:aldoborrero/freecad.nix#freecad-ribbon)"`
