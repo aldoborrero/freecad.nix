@@ -14,7 +14,7 @@
 { pkgs, ... }:
 let
   inherit (pkgs) lib python3Packages;
-  version = "0.1.21";
+  version = "0.1.25";
 in
 python3Packages.buildPythonApplication {
   pname = "freecad-mcp";
@@ -25,7 +25,7 @@ python3Packages.buildPythonApplication {
     owner = "neka-nat";
     repo = "freecad-mcp";
     rev = "v${version}";
-    hash = "sha256-c6eyJPQzRV/ajIFhEmdXb+Y5LQiZj714yuJd5UDfnhw=";
+    hash = "sha256-E6oTCpLMI/WBAmWwIWKu8tmWJAFPKZ55R6/zvd+8Pzo=";
   };
 
   build-system = [ python3Packages.hatchling ];
