@@ -21,16 +21,16 @@
       "workbench"
     ],
     "description": "A collection of tools mainly dedicated to NURBS curves and surfaces modeling.",
-    "hash": "sha256-Hnk8P0TENjSO5LIYxlxKCUkIU+aE0q5Aj+mTtFBfk6A=",
+    "hash": "sha256-NfPukt54F7q4dZXs8WliCRJ8Kp2FHLhNX9b2FneIiKI=",
     "homepage": "https://github.com/tomate44/CurvesWB",
     "license": "LGPL-2.1-or-later",
     "name": "Curves",
     "ref": "main",
     "repository": "https://github.com/tomate44/CurvesWB",
-    "rev": "3f010978ff267cdcf249f394cb065dbd6a392fab",
+    "rev": "e47b47927f59c87b93a1820c9f6ad4b4dc187076",
     "spdx": "LGPL-2.1-or-later",
     "tag": null,
-    "version": "0.6.75"
+    "version": "0.6.81"
   },
   "DynamicData": {
     "content": [

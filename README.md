@@ -41,7 +41,7 @@ Expand an entry for its version, upstream project and usage command.
 <summary><strong>curves</strong> — A collection of tools mainly dedicated to NURBS curves and surfaces modeling.</summary>
 
 - **Source**: FreeCAD's catalogue
-- **Version**: 0.6.75
+- **Version**: 0.6.81
 - **Licence**: LGPL-2.1-or-later
 - **Homepage**: https://github.com/tomate44/CurvesWB
 - **Use**: `nix run github:aldoborrero/freecad.nix#freecad-weekly -- --module-path "$(nix build --no-link --print-out-paths github:aldoborrero/freecad.nix#curves)"`
