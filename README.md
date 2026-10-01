@@ -217,7 +217,7 @@ Expand an entry for its version, upstream project and usage command.
 <summary><strong>color-palette-theme</strong> — Choose your colors with the "ColorPalette" Theme and increase the focus on objects and texts(FreeCAD v1.1.0 ≥)</summary>
 
 - **Source**: FreeCAD's catalogue
-- **Version**: 2.3.3
+- **Version**: 2.4.3
 - **Licence**: LGPL-2.1-or-later
 - **Homepage**: https://github.com/altangarts/FreeCAD-Themes-ColorPalette
 - **Use**: `nix run github:aldoborrero/freecad.nix#freecad-weekly -- --module-path "$(nix build --no-link --print-out-paths github:aldoborrero/freecad.nix#color-palette-theme)"`
