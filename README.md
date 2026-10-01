@@ -127,7 +127,7 @@ Expand an entry for its version, upstream project and usage command.
 <summary><strong>sheetmetal</strong> — A simple sheet metal tools workbench for FreeCAD.</summary>
 
 - **Source**: FreeCAD's catalogue
-- **Version**: 0.8.21
+- **Version**: 0.8.24
 - **Licence**: LGPL-2.1-or-later
 - **Homepage**: https://github.com/shaise/FreeCAD_SheetMetal
 - **Use**: `nix run github:aldoborrero/freecad.nix#freecad-weekly -- --module-path "$(nix build --no-link --print-out-paths github:aldoborrero/freecad.nix#sheetmetal)"`
