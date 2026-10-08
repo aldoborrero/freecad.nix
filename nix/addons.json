@@ -52,17 +52,17 @@
     "content": [
       "workbench"
     ],
-    "description": "A Ribbon interface for FreeCAD",
-    "hash": "sha256-8G5P2EvXfHDpzz7AKe8jZXtV1R2xsy2REVBpbRZ6C50=",
+    "description": "A customizable ribbon interface for FreeCAD",
+    "hash": "sha256-I6RGnWfdcDXHDG13ws452q2ScpW7MksZJ/ZRuax4gVU=",
     "homepage": "https://codeberg.org/apebbers/FreeCAD-Ribbon/wiki",
     "license": "GPL-3.0-or-later",
     "name": "FreeCAD-Ribbon",
     "ref": "main",
     "repository": "https://github.com/APEbbers/FreeCAD-Ribbon",
-    "rev": "ef4f473743094e0f61f95a76b4468d3f42f417f0",
+    "rev": "588a96a91bbc8b2e5dc5ba89daaaf0f2d105469d",
     "spdx": "GPL-3.0-or-later",
     "tag": null,
-    "version": "1.11.3"
+    "version": "1.11.12"
   },
   "Gridfinity": {
     "content": [
