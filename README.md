@@ -267,7 +267,7 @@ Expand an entry for its version, upstream project and usage command.
 <summary><strong>freecad-mcp</strong> — MCP server for FreeCAD: drives a running FreeCAD over XML-RPC</summary>
 
 - **Source**: [neka-nat](https://github.com/neka-nat/freecad-mcp)
-- **Version**: 0.1.21
+- **Version**: 0.1.26
 - **Licence**: MIT
 - **Homepage**: https://github.com/neka-nat/freecad-mcp
 - **Use**: `nix run github:aldoborrero/freecad.nix#freecad-weekly -- --module-path "$(nix build --no-link --print-out-paths github:aldoborrero/freecad.nix#freecad-mcp)/share/freecad-mcp/FreeCADMCP"`
