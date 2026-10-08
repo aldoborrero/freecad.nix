@@ -5,16 +5,16 @@
       "workbench"
     ],
     "description": "Choose your colors with the \"ColorPalette\" Theme and increase the focus on objects and texts(FreeCAD v1.1.0 \u2265)",
-    "hash": "sha256-4PbxP133EBeEEut172LUEK1jC9FJm7GNlDajgNuXKqc=",
+    "hash": "sha256-ZxwJyhi6IS4UICZtT8OxosO7JkQPjCjNQW5RYEJZ8KU=",
     "homepage": "https://github.com/altangarts/FreeCAD-Themes-ColorPalette",
     "license": "LGPL-2.1-or-later",
     "name": "Color-Palette-Theme",
     "ref": "main",
     "repository": "https://github.com/altangarts/FreeCAD-Themes-ColorPalette",
-    "rev": "0382442822e6d4cc83181dd44c3180fa3fd1d1be",
+    "rev": "c2c0f2d417f6b231c9065cfe19cdddf4ad9de2bf",
     "spdx": "LGPL-2.1-or-later",
     "tag": null,
-    "version": "2.3.3"
+    "version": "2.4.7"
   },
   "Curves": {
     "content": [
