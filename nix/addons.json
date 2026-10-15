@@ -246,15 +246,15 @@
       "workbench"
     ],
     "description": "A simple sheet metal tools workbench for FreeCAD.",
-    "hash": "sha256-U1aiVUJ3anhDH207Jx0o34pDFe9F5Oju6TIVr4lAsnI=",
+    "hash": "sha256-AnTUA4ToUqaR18z5qNkBKtihk0QUKgT0UssRZEl4IcU=",
     "homepage": "https://github.com/shaise/FreeCAD_SheetMetal",
     "license": "LGPL-2.1-or-later",
     "name": "sheetmetal",
     "ref": "master",
     "repository": "https://github.com/shaise/FreeCAD_SheetMetal",
-    "rev": "846b9e23aca1d6bec5822c581be7b6d1138083d1",
+    "rev": "8177569b67ed8b0cd278bf8e9ce0fe220c1d7f03",
     "spdx": "LGPL-2.1-or-later",
-    "tag": null,
-    "version": "0.8.21"
+    "tag": "V0.8.26-beta",
+    "version": "0.8.26"
   }
 }
